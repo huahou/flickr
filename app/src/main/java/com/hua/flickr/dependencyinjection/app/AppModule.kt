@@ -3,6 +3,7 @@ package com.hua.flickr.dependencyinjection.app
 import android.app.Application
 import com.hua.flickr.common.Constants
 import com.hua.flickr.networking.FlickrApi
+import com.hua.flickr.networking.SSLPinning
 import dagger.Module
 import dagger.Provides
 import okhttp3.OkHttpClient
@@ -13,7 +14,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 class AppModule(val app: Application) {
 
     @Provides
-    fun okHttpClient(): OkHttpClient = OkHttpClient()
+    fun okHttpClient(): OkHttpClient = SSLPinning.getPinnedClient(app)
         .newBuilder()
         .build()
 
