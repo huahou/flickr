@@ -12,6 +12,7 @@ daggerVersion = "2.50"
 kaptVersion = "2.0.0"
 retrofitVersion = "2.6.1"
 jsonConverterVersion = "2.6.1"
+navigationComposeVersion = "2.6.0"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -32,6 +33,8 @@ dagger-dagger = {group = "com.google.dagger", name = "dagger", version.ref = "da
 dagger-compiler = {group = "com.google.dagger", name = "dagger-compiler", version.ref = "daggerVersion"}
 retrofit = {group = "com.squareup.retrofit2", name = "retrofit", version.ref = "retrofitVersion"}
 json-converter = {group = "com.squareup.retrofit2", name = "converter-gson", version.ref = "jsonConverterVersion"}
+navigation-compose = {group = "androidx.navigation", name = "navigation-compose", version.ref = "navigationComposeVersion"}
+material-icons-extended = {group = "androidx.compose.material", name = "material-icons-extended"}
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

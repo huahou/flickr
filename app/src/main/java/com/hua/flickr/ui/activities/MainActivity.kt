@@ -12,11 +12,20 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.currentBackStackEntryAsState
+import androidx.navigation.compose.rememberNavController
+import com.hua.flickr.domain.usecases.SearchPhotoUseCase
 import com.hua.flickr.ui.common.activities.BaseActivity
 import com.hua.flickr.ui.common.viewmodels.ViewModelFactory
+import com.hua.flickr.ui.navigation.ImageDetail
+import com.hua.flickr.ui.navigation.Search
 import com.hua.flickr.ui.theme.FlickrTheme
 import com.hua.flickr.ui.viewmodels.FlickrViewModel
 import javax.inject.Inject
+import androidx.compose.runtime.getValue
 
 class MainActivity : BaseActivity() {
     @Inject lateinit var viewModelFactory: ViewModelFactory<FlickrViewModel>
@@ -29,22 +38,42 @@ class MainActivity : BaseActivity() {
         viewModel = ViewModelProvider(this, viewModelFactory).get(FlickrViewModel::class.java)
 
         enableEdgeToEdge()
-        setContent {
-            FlickrApp()
+        viewModel.photoState.observe(this) { photoState ->
+            setContent {
+                FlickrApp(photoState = photoState)
+            }
         }
 
     }
 
     @Composable
-    private fun FlickrApp() {
+    private fun FlickrApp(photoState: SearchPhotoUseCase.PhotosUiState) {
         FlickrTheme {
-            Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                Greeting(
-                    name = "Android",
+            val navController: NavHostController = rememberNavController()
+            val currentBackStack by navController.currentBackStackEntryAsState()
+
+            Scaffold(
+                topBar = {
+
+                }
+            ) { innerPadding ->
+                NavHost(
+                    navController = navController,
+                    startDestination = Search.route,
                     modifier = Modifier.padding(innerPadding)
-                )
+                ){
+                    composable(route = Search.route) {
+                    }
+
+                    composable(
+                        route = ImageDetail.route,
+                        arguments = ImageDetail.arguments
+                    ) { navBackStackEntry ->
+                    }
+                }
             }
         }
+
     }
 }
 

@@ -69,6 +69,12 @@ dependencies {
     implementation(libs.retrofit)
     implementation(libs.json.converter)
 
+    // Navigation-compose
+    implementation(libs.navigation.compose)
+
+    // Icons
+    implementation(libs.material.icons.extended)
+
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
