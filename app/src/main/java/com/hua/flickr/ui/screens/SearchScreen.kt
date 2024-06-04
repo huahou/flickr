@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.lazy.grid.GridCells
@@ -103,29 +104,47 @@ private fun PhotosUI(
     photos: List<Photo>,
     onImageClick: (Int) -> Unit
 ) {
-    LazyVerticalStaggeredGrid(
-        columns = StaggeredGridCells.Adaptive(200.dp),
-        verticalItemSpacing = 4.dp,
-        horizontalArrangement = Arrangement.spacedBy(4.dp),
+    if (photos.isEmpty()) {
+        EmptyResultUI()
+    } else {
+        LazyVerticalStaggeredGrid(
+            columns = StaggeredGridCells.Adaptive(200.dp),
+            verticalItemSpacing = 4.dp,
+            horizontalArrangement = Arrangement.spacedBy(4.dp),
+            modifier = Modifier
+                .fillMaxSize()
+                .background(color = Color.DarkGray)
+        ) {
+            itemsIndexed(photos) { index, photo ->
+                AsyncImage(
+                    model = ImageRequest.Builder(LocalContext.current)
+                        .data(photo.thumbnailUrl)
+                        .crossfade(true)
+                        .build(),
+                    contentDescription = null,
+                    contentScale = ContentScale.Crop,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .clickable {
+                            onImageClick.invoke(index)
+                        }
+                )
+            }
+        }
+    }
+}
+
+@Composable
+private fun EmptyResultUI() {
+    Column(
         modifier = Modifier
             .fillMaxSize()
-            .background(color = Color.DarkGray)
+            .padding(8.dp)
     ) {
-        itemsIndexed(photos) { index, photo ->
-            AsyncImage(
-                model = ImageRequest.Builder(LocalContext.current)
-                    .data(photo.thumbnailUrl)
-                    .crossfade(true)
-                    .build(),
-                contentDescription = null,
-                contentScale = ContentScale.Crop,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .clickable {
-                        onImageClick.invoke(index)
-                    }
-            )
-        }
+        Text(
+            text = stringResource(id = R.string.no_result_found),
+            style = typography.bodyMedium
+        )
     }
 }
 

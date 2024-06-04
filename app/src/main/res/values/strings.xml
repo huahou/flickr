@@ -4,4 +4,7 @@
     <string name="credit">Credit:</string>
     <string name="size">Size:</string>
     <string name="description">Description</string>
+    <string name="flickr">Flickr</string>
+    <string name="photo_detail">Photo Details</string>
+    <string name="no_result_found">No matching result found!</string>
 </resources>

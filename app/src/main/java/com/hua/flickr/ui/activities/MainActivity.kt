@@ -19,8 +19,10 @@ import com.hua.flickr.data.model.Photo
 import com.hua.flickr.domain.usecases.SearchPhotoUseCase
 import com.hua.flickr.ui.common.activities.BaseActivity
 import com.hua.flickr.ui.common.viewmodels.ViewModelFactory
+import com.hua.flickr.ui.components.FlickrAppBar
 import com.hua.flickr.ui.navigation.ImageDetail
 import com.hua.flickr.ui.navigation.Search
+import com.hua.flickr.ui.navigation.flickrScreens
 import com.hua.flickr.ui.screens.PhotoDetailScreen
 import com.hua.flickr.ui.screens.SearchScreen
 import com.hua.flickr.ui.theme.FlickrTheme
@@ -60,7 +62,13 @@ class MainActivity : BaseActivity() {
 
             Scaffold(
                 topBar = {
-
+                    FlickrAppBar(
+                        currentScreen = flickrScreens.find {
+                            it.route == currentBackStack?.destination?.route
+                        } ?: Search
+                    ){
+                        navController.navigateUp()
+                    }
                 }
             ) { innerPadding ->
                 NavHost(
