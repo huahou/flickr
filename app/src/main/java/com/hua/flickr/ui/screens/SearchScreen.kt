@@ -21,6 +21,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
+import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.MaterialTheme.typography
 import androidx.compose.material3.Text
@@ -88,14 +89,13 @@ private fun InitialUI() {
 
 @Composable
 private fun LoadingUI() {
-    Box(
-        modifier = Modifier.fillMaxSize(),
-        contentAlignment = Alignment.Center
+    Column(
+        modifier = Modifier.fillMaxSize()
     ) {
-//        CircularProgressIndicator(
-//            modifier = Modifier.size(100.dp),
-//            color = MaterialTheme.colorScheme.primary
-//        )
+        LinearProgressIndicator(
+            modifier = Modifier
+                .fillMaxWidth()
+        )
     }
 }
 
@@ -109,11 +109,11 @@ private fun PhotosUI(
     } else {
         LazyVerticalStaggeredGrid(
             columns = StaggeredGridCells.Adaptive(200.dp),
-            verticalItemSpacing = 4.dp,
-            horizontalArrangement = Arrangement.spacedBy(4.dp),
+            verticalItemSpacing = 2.dp,
+            horizontalArrangement = Arrangement.spacedBy(2.dp),
             modifier = Modifier
                 .fillMaxSize()
-                .background(color = Color.DarkGray)
+                .background(color = Color.White)
         ) {
             itemsIndexed(photos) { index, photo ->
                 AsyncImage(
