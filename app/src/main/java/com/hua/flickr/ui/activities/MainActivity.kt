@@ -1,4 +1,4 @@
-package com.hua.flickr
+package com.hua.flickr.ui.activities
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity

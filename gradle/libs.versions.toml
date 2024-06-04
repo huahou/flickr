@@ -10,7 +10,8 @@ activityCompose = "1.9.0"
 composeBom = "2023.08.00"
 daggerVersion = "2.50"
 kaptVersion = "2.0.0"
-
+retrofitVersion = "2.6.1"
+jsonConverterVersion = "2.6.1"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -29,6 +30,8 @@ androidx-ui-test-junit4 = { group = "androidx.compose.ui", name = "ui-test-junit
 androidx-material3 = { group = "androidx.compose.material3", name = "material3" }
 dagger-dagger = {group = "com.google.dagger", name = "dagger", version.ref = "daggerVersion"}
 dagger-compiler = {group = "com.google.dagger", name = "dagger-compiler", version.ref = "daggerVersion"}
+retrofit = {group = "com.squareup.retrofit2", name = "retrofit", version.ref = "retrofitVersion"}
+json-converter = {group = "com.squareup.retrofit2", name = "converter-gson", version.ref = "jsonConverterVersion"}
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

@@ -60,9 +60,14 @@ dependencies {
     implementation(libs.androidx.ui.graphics)
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
+
     // Dagger support
     implementation(libs.dagger.dagger)
     kapt(libs.dagger.compiler)
+
+    // Retrofit
+    implementation(libs.retrofit)
+    implementation(libs.json.converter)
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
