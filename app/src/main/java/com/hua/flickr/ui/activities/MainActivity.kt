@@ -39,14 +39,16 @@ class MainActivity : BaseActivity() {
         enableEdgeToEdge()
         viewModel.photoState.observe(this) { photosState ->
             setContent {
-                FlickrApp(photosState = photosState)
+                FlickrApp(photosState = photosState) { keyword ->
+                    viewModel.searchPhotos(keyword)
+                }
             }
         }
         viewModel.searchPhotos("")
     }
 
     @Composable
-    private fun FlickrApp(photosState: SearchPhotoUseCase.PhotosUiState) {
+    private fun FlickrApp(photosState: SearchPhotoUseCase.PhotosUiState, onSearch: (String) -> Unit ) {
         FlickrTheme {
             val navController: NavHostController = rememberNavController()
             val currentBackStack by navController.currentBackStackEntryAsState()
@@ -64,7 +66,7 @@ class MainActivity : BaseActivity() {
                     composable(route = Search.route) {
                         SearchScreen(
                             photosState = photosState,
-                            onSearch = {},
+                            onSearch = onSearch,
                             onImageClick = { index ->
                                 navController.navigateSingleTopTo("${ImageDetail.baseRoute}/${index}")
                             }

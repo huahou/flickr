@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.itemsIndexed
@@ -15,6 +16,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
@@ -53,7 +55,7 @@ fun SearchScreen(
             }
 
             is SearchPhotoUseCase.PhotosUiState.Success -> {
-                PhotosUI(photosState.photos, onSearch, onImageClick)
+                PhotosUI(photosState.photos, onImageClick)
             }
 
             is SearchPhotoUseCase.PhotosUiState.Failure -> {
@@ -84,18 +86,19 @@ private fun LoadingUI() {
         modifier = Modifier.fillMaxSize(),
         contentAlignment = Alignment.Center
     ) {
-        CircularProgressIndicator()
+//        CircularProgressIndicator(
+//            modifier = Modifier.size(100.dp),
+//            color = MaterialTheme.colorScheme.primary
+//        )
     }
 }
 
 @Composable
 private fun PhotosUI(
     photos: List<Photo>,
-    onSearch: (String) -> Unit,
     onImageClick: (Int) -> Unit
 ) {
     Column(modifier = Modifier.fillMaxSize()) {
-        SearchBar(onSearch)
         LazyVerticalGrid(
             columns = GridCells.Adaptive(minSize = 128.dp),
             verticalArrangement = Arrangement.spacedBy(1.dp),
