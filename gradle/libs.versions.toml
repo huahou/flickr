@@ -14,6 +14,7 @@ retrofitVersion = "2.6.1"
 jsonConverterVersion = "2.6.1"
 navigationComposeVersion = "2.6.0"
 coilVersion = "2.1.0"
+leakCanaryVersion = '2.14'
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -37,7 +38,7 @@ json-converter = {group = "com.squareup.retrofit2", name = "converter-gson", ver
 navigation-compose = {group = "androidx.navigation", name = "navigation-compose", version.ref = "navigationComposeVersion"}
 material-icons-extended = {group = "androidx.compose.material", name = "material-icons-extended"}
 coil = {group = "io.coil-kt", name = "coil-compose", version.ref = "coilVersion"}
-
+leakcanary = {group = "com.squareup.leakcanary", name = "leakcanary-android", version.ref = "leakCanaryVersion"}
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
