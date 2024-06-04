@@ -160,7 +160,10 @@ private fun DetailsSection(photo: Photo, width: Int, height: Int, onShare: (Phot
                 text = stringResource(id = R.string.size),
                 style = typography.titleSmall
             )
-            Text(text = "$width x $height")
+            Text(
+                text = "$width x $height",
+                style = typography.bodyMedium
+            )
         }
 
         Text(
@@ -168,7 +171,10 @@ private fun DetailsSection(photo: Photo, width: Int, height: Int, onShare: (Phot
             style = typography.titleSmall
         )
 
-        HtmlText(html = photo.description)
+        HtmlText(
+            html = photo.description,
+            style = typography.bodyMedium
+        )
 
         Button(
             onClick = { onShare(photo) },
