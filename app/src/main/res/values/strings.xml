@@ -1,4 +1,7 @@
 <resources>
     <string name="app_name">Flickr</string>
     <string name="search_placeholder_text">Photos, people, or groups</string>
+    <string name="credit">Credit:</string>
+    <string name="size">Size:</string>
+    <string name="description">Description</string>
 </resources>

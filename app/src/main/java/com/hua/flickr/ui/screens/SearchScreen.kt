@@ -104,8 +104,8 @@ private fun PhotosUI(
 ) {
     LazyVerticalStaggeredGrid(
         columns = StaggeredGridCells.Adaptive(200.dp),
-        verticalItemSpacing = 2.dp,
-        horizontalArrangement = Arrangement.spacedBy(2.dp),
+        verticalItemSpacing = 4.dp,
+        horizontalArrangement = Arrangement.spacedBy(4.dp),
         modifier = Modifier
             .fillMaxSize()
             .background(color = Color.DarkGray)

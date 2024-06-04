@@ -5,7 +5,6 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.ViewModelProvider
@@ -23,6 +22,7 @@ import com.hua.flickr.ui.theme.FlickrTheme
 import com.hua.flickr.ui.viewmodels.FlickrViewModel
 import javax.inject.Inject
 import androidx.compose.runtime.getValue
+import com.hua.flickr.ui.screens.PhotoDetailScreen
 import com.hua.flickr.ui.screens.SearchScreen
 import com.hua.flickr.utils.ext.navigateSingleTopTo
 
@@ -44,7 +44,8 @@ class MainActivity : BaseActivity() {
                 }
             }
         }
-        viewModel.searchPhotos("")
+        if (savedInstanceState == null)
+            viewModel.searchPhotos("")
     }
 
     @Composable
@@ -77,10 +78,14 @@ class MainActivity : BaseActivity() {
                         route = ImageDetail.route,
                         arguments = ImageDetail.arguments
                     ) { navBackStackEntry ->
+                        val photoIndex = navBackStackEntry.arguments?.getInt(ImageDetail.imageIndexArg)
+                        photoIndex?.let{
+                            val image = (photosState as SearchPhotoUseCase.PhotosUiState.Success).photos[photoIndex]
+                            PhotoDetailScreen(image)
+                        }
                     }
                 }
             }
         }
-
     }
 }
