@@ -1,16 +1,13 @@
 package com.hua.flickr.ui.activities
 
 import android.os.Bundle
-import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
@@ -26,6 +23,8 @@ import com.hua.flickr.ui.theme.FlickrTheme
 import com.hua.flickr.ui.viewmodels.FlickrViewModel
 import javax.inject.Inject
 import androidx.compose.runtime.getValue
+import com.hua.flickr.ui.screens.SearchScreen
+import com.hua.flickr.utils.ext.navigateSingleTopTo
 
 class MainActivity : BaseActivity() {
     @Inject lateinit var viewModelFactory: ViewModelFactory<FlickrViewModel>
@@ -38,16 +37,16 @@ class MainActivity : BaseActivity() {
         viewModel = ViewModelProvider(this, viewModelFactory).get(FlickrViewModel::class.java)
 
         enableEdgeToEdge()
-        viewModel.photoState.observe(this) { photoState ->
+        viewModel.photoState.observe(this) { photosState ->
             setContent {
-                FlickrApp(photoState = photoState)
+                FlickrApp(photosState = photosState)
             }
         }
-
+        viewModel.searchPhotos("")
     }
 
     @Composable
-    private fun FlickrApp(photoState: SearchPhotoUseCase.PhotosUiState) {
+    private fun FlickrApp(photosState: SearchPhotoUseCase.PhotosUiState) {
         FlickrTheme {
             val navController: NavHostController = rememberNavController()
             val currentBackStack by navController.currentBackStackEntryAsState()
@@ -63,6 +62,13 @@ class MainActivity : BaseActivity() {
                     modifier = Modifier.padding(innerPadding)
                 ){
                     composable(route = Search.route) {
+                        SearchScreen(
+                            photosState = photosState,
+                            onSearch = {},
+                            onImageClick = { index ->
+                                navController.navigateSingleTopTo("${ImageDetail.baseRoute}/${index}")
+                            }
+                        )
                     }
 
                     composable(
@@ -76,12 +82,3 @@ class MainActivity : BaseActivity() {
 
     }
 }
-
-@Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Text(
-        text = "Hello $name!",
-        modifier = modifier
-    )
-}
-

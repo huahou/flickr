@@ -9,6 +9,7 @@ import kotlin.coroutines.cancellation.CancellationException
 
 class SearchPhotoUseCase @Inject constructor(private val photosRepo: SearchPhotoRepository){
     sealed class PhotosUiState {
+        object Initial: PhotosUiState()
         object Loading: PhotosUiState()
         class Success(val photos: List<Photo>) : PhotosUiState()
         object Failure: PhotosUiState()
@@ -16,6 +17,8 @@ class SearchPhotoUseCase @Inject constructor(private val photosRepo: SearchPhoto
 
 
     suspend fun searchPhotos(keyword: String): PhotosUiState {
+        if (keyword.isEmpty()) return PhotosUiState.Initial
+
         return withContext(Dispatchers.IO) {
             try {
                 val response = photosRepo.searchPhotos(keyword)
