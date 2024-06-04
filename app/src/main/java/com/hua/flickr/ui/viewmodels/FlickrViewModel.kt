@@ -8,7 +8,7 @@ import com.hua.flickr.domain.usecases.SearchPhotoUseCase
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-class WeatherViewModel @Inject constructor(private val searchPhotoUseCase: SearchPhotoUseCase): ViewModel() {
+class FlickrViewModel @Inject constructor(private val searchPhotoUseCase: SearchPhotoUseCase): ViewModel() {
     private val _photoState: MutableLiveData<SearchPhotoUseCase.PhotosUiState> = MutableLiveData()
     val photoState: LiveData<SearchPhotoUseCase.PhotosUiState> = _photoState
 
