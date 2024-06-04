@@ -1,11 +1,13 @@
 package com.hua.flickr.ui.activities
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavHostController
@@ -13,18 +15,20 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import com.hua.flickr.data.model.Photo
 import com.hua.flickr.domain.usecases.SearchPhotoUseCase
 import com.hua.flickr.ui.common.activities.BaseActivity
 import com.hua.flickr.ui.common.viewmodels.ViewModelFactory
 import com.hua.flickr.ui.navigation.ImageDetail
 import com.hua.flickr.ui.navigation.Search
-import com.hua.flickr.ui.theme.FlickrTheme
-import com.hua.flickr.ui.viewmodels.FlickrViewModel
-import javax.inject.Inject
-import androidx.compose.runtime.getValue
 import com.hua.flickr.ui.screens.PhotoDetailScreen
 import com.hua.flickr.ui.screens.SearchScreen
+import com.hua.flickr.ui.theme.FlickrTheme
+import com.hua.flickr.ui.viewmodels.FlickrViewModel
 import com.hua.flickr.utils.ext.navigateSingleTopTo
+import com.hua.flickr.utils.ext.share
+import javax.inject.Inject
+
 
 class MainActivity : BaseActivity() {
     @Inject lateinit var viewModelFactory: ViewModelFactory<FlickrViewModel>
@@ -81,11 +85,18 @@ class MainActivity : BaseActivity() {
                         val photoIndex = navBackStackEntry.arguments?.getInt(ImageDetail.imageIndexArg)
                         photoIndex?.let{
                             val image = (photosState as SearchPhotoUseCase.PhotosUiState.Success).photos[photoIndex]
-                            PhotoDetailScreen(image)
+                            PhotoDetailScreen(image) {
+                                sharePhoto(it)
+                            }
                         }
                     }
                 }
             }
         }
+    }
+
+    private fun sharePhoto(photo: Photo) {
+        val sharedText = "${photo.title} ${photo.thumbnailUrl}"
+        share(sharedText)
     }
 }

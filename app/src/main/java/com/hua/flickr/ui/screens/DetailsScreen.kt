@@ -42,7 +42,7 @@ import com.hua.flickr.ui.components.HtmlText
 import kotlinx.coroutines.Dispatchers
 
 @Composable
-fun PhotoDetailScreen(photo: Photo) {
+fun PhotoDetailScreen(photo: Photo, onShare: (Photo) -> Unit) {
     val configuration = LocalConfiguration.current
     val isPortrait = configuration.orientation == Configuration.ORIENTATION_PORTRAIT
 
@@ -80,14 +80,14 @@ fun PhotoDetailScreen(photo: Photo) {
         .build()
 
     if (isPortrait) {
-        ImageDetailPortraitMode(photo = photo, imageRequest = imageRequest, width = imageWidth, height = imageHeight)
+        ImageDetailPortraitMode(photo = photo, imageRequest = imageRequest, width = imageWidth, height = imageHeight, onShare = onShare)
     } else {
-        ImageDetailLandscapeMode(photo = photo, imageRequest = imageRequest, width = imageWidth, height = imageHeight)
+        ImageDetailLandscapeMode(photo = photo, imageRequest = imageRequest, width = imageWidth, height = imageHeight, onShare = onShare)
     }
 }
 
 @Composable
-private fun ImageDetailPortraitMode(photo: Photo, imageRequest: ImageRequest, width: Int, height: Int){
+private fun ImageDetailPortraitMode(photo: Photo, imageRequest: ImageRequest, width: Int, height: Int, onShare: (Photo) -> Unit){
     val scrollState = rememberScrollState()
     Column(
         modifier = Modifier
@@ -102,12 +102,12 @@ private fun ImageDetailPortraitMode(photo: Photo, imageRequest: ImageRequest, wi
         )
         Spacer(modifier = Modifier.height(24.dp))
 
-        DetailsSection(photo = photo, width = width, height = height)
+        DetailsSection(photo = photo, width = width, height = height, onShare = onShare)
     }
 }
 
 @Composable
-private fun ImageDetailLandscapeMode(photo: Photo, imageRequest: ImageRequest, width: Int, height: Int){
+private fun ImageDetailLandscapeMode(photo: Photo, imageRequest: ImageRequest, width: Int, height: Int, onShare: (Photo) -> Unit){
     Row(
         modifier = Modifier
             .fillMaxHeight()
@@ -128,13 +128,13 @@ private fun ImageDetailLandscapeMode(photo: Photo, imageRequest: ImageRequest, w
                 .fillMaxSize()
                 .verticalScroll(scrollState)
         ){
-            DetailsSection(photo = photo, width = width, height = height)
+            DetailsSection(photo = photo, width = width, height = height, onShare = onShare)
         }
     }
 }
 
 @Composable
-private fun DetailsSection(photo: Photo, width: Int, height: Int) {
+private fun DetailsSection(photo: Photo, width: Int, height: Int, onShare: (Photo) -> Unit) {
     Column(modifier = Modifier.padding(horizontal = 8.dp)) {
         Text(
             text = photo.title,
@@ -171,7 +171,7 @@ private fun DetailsSection(photo: Photo, width: Int, height: Int) {
         HtmlText(html = photo.description)
 
         Button(
-            onClick = { /* Do something */ },
+            onClick = { onShare(photo) },
             colors = ButtonDefaults.buttonColors(containerColor = colorResource(id = R.color.purple_500)),
             shape = RoundedCornerShape(16.dp),
             modifier = Modifier
@@ -180,7 +180,7 @@ private fun DetailsSection(photo: Photo, width: Int, height: Int) {
         ) {
             Text(
                 text = "Share",
-                fontSize = 18.sp,
+                style =typography.titleSmall,
                 color = Color.White
             )
         }

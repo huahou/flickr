@@ -21,6 +21,7 @@ import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.MaterialTheme.typography
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
@@ -137,6 +138,7 @@ private fun SearchBar(onSearch: (String) -> Unit) {
             searchText.value = newText
             onSearch(newText)
         },
+        textStyle = typography.bodyMedium,
         modifier = Modifier.fillMaxWidth(),
         placeholder = {
             Text(text = stringResource(id = R.string.search_placeholder_text))
