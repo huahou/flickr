@@ -9,9 +9,13 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.itemsIndexed
+import androidx.compose.foundation.lazy.staggeredgrid.LazyVerticalStaggeredGrid
+import androidx.compose.foundation.lazy.staggeredgrid.StaggeredGridCells
+import androidx.compose.foundation.lazy.staggeredgrid.itemsIndexed
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.CircularProgressIndicator
@@ -98,28 +102,28 @@ private fun PhotosUI(
     photos: List<Photo>,
     onImageClick: (Int) -> Unit
 ) {
-    Column(modifier = Modifier.fillMaxSize()) {
-        LazyVerticalGrid(
-            columns = GridCells.Adaptive(minSize = 128.dp),
-            verticalArrangement = Arrangement.spacedBy(1.dp),
-            horizontalArrangement = Arrangement.spacedBy(1.dp),
-            modifier = Modifier.background(color = Color.DarkGray)
-        ) {
-            itemsIndexed(photos) { index, photo ->
-                AsyncImage(
-                    model = ImageRequest.Builder(LocalContext.current)
-                        .data(photo.thumbnailUrl)
-                        .crossfade(true)
-                        .build(),
-                    contentDescription = null,
-                    contentScale = ContentScale.Crop,
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .clickable {
-                            onImageClick.invoke(index)
-                        }
-                )
-            }
+    LazyVerticalStaggeredGrid(
+        columns = StaggeredGridCells.Adaptive(200.dp),
+        verticalItemSpacing = 2.dp,
+        horizontalArrangement = Arrangement.spacedBy(2.dp),
+        modifier = Modifier
+            .fillMaxSize()
+            .background(color = Color.DarkGray)
+    ) {
+        itemsIndexed(photos) { index, photo ->
+            AsyncImage(
+                model = ImageRequest.Builder(LocalContext.current)
+                    .data(photo.thumbnailUrl)
+                    .crossfade(true)
+                    .build(),
+                contentDescription = null,
+                contentScale = ContentScale.Crop,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .clickable {
+                        onImageClick.invoke(index)
+                    }
+            )
         }
     }
 }
